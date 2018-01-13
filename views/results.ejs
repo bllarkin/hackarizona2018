@@ -1,0 +1,58 @@
+<% include ../partials/header %>
+
+<h2>Here are the benefits you may qualify for:</h2>
+
+<ul class="collapsible">
+  <% if(canGetSnap === true){ %>
+    <li>
+      <div class="collapsible-header"><i class="material-icons"></i>SNAP Benefits</div>
+      <div class="collapsible-body">
+        <p>
+          The maximimum SNAP benefit you may be eligible for would be $<% maxSnapBenefits %>.  For more information, see below.
+        </p>
+        <p>
+          <a href="https://des.az.gov/services/basic-needs/food/nutrition-assistance-formerly-food-stamp-program" class="waves-effect waves-light btn blue darken-3">More Information About SNAP</a>
+        </p>
+      </div>
+    </li>
+  <% } %>
+  <% if(canGetCashAssistance === true){ %>
+    <li>
+      <div class="collapsible-header"><i class="material-icons"></i>Cash Benefits/Assistance</div>
+      <div class="collapsible-body">
+        <p>
+          The maximimum cash benefit you may be eligible for would be $<% maxCashAssistance %>.  For more information, see below.
+        </p>
+        <p>
+            <a href="https://des.az.gov/services/basic-needs/financial-support/cash-assistance" class="waves-effect waves-light btn blue darken-3">More Information About Cash Assistance</a>
+          </p>
+      </div>
+    </li>
+  <% } %>
+  <% if(eligibleForHealthcare !== "none"){ %>
+    <li>
+      <div class="collapsible-header"><i class="material-icons"></i>Healthcare</div>
+      <div class="collapsible-body">
+        <p>
+          Based on the information provided, you could be eligible for healthcare through the Arizona Health Care Cost Containment System.
+        </p>
+        <p>
+            <a href="https://www.azahcccs.gov/" class="waves-effect waves-light btn blue darken-3">More Information About AHCCCS</a>
+          </p>
+      </div>
+    </li>
+  <% } else { %>
+    <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Healthcare</div>
+        <div class="collapsible-body">
+          <p>
+            Based on the information provided, you would not be eligible for the Arizona Health Care Cost Containment system.  You may still be eligible for subsidized healthcare through the Affordable Care Act.
+          </p>
+          <p>
+              <a href="https://www.healthcare.gov" class="waves-effect waves-light btn blue darken-3">More Information About The ACA</a>
+            </p>
+        </div>
+      </li>
+</ul>
+
+<% include ../partials/footer %>
