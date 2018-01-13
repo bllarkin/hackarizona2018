@@ -115,14 +115,21 @@ app.post('/viewResults', function(req, res){
     wasFosterChild: Boolean(isFoster),
     isPregnant: Boolean(isPregnant),
     isUSCitizen: true,
-    househldsize: Number(householdSize),
+    householdsize: Number(householdSize),
   }
-  console.log(userInfo)
   let snap = findSnapBenefitsEligibility(userInfo)
   let cash = findCashAssistanceEligibility(userInfo)
   let health = findHealthcareBenefitEligibility(userInfo)
 
-  res.send('snap:'+  snap + 'cash' +  cash +  'health' + health)
+  let results = {
+    canGetSnap: snap > 0 ? true : false,
+    maxSnapBenefits: getMaxSNAPBenefits(userInfo.householdsize),
+    canGetCashAssistance: cash > 0 ? true : false, 
+    maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
+    eligibileForHealthcare: health
+
+  }
+  res.json(results);
 })
 
 //Get routes
@@ -260,6 +267,7 @@ function findCashAssistanceEligibility(visitorInfo){
   //Source: https://des.az.gov/content/cash-assistance-ca-income-eligibility-guidelines
   let cashAssistance = 0;
   if (visitorInfo.income < getFederalPovertyLineForHouseholdSize(visitorInfo.householdsize)){
+    console.log("alright do we even get here ")
       cashAssistance = getCashBenefitForHouseholdSize(visitorInfo.householdsize)
   }
   return cashAssistance;
@@ -317,6 +325,30 @@ function getSNAPBenefits(householdsize, income){
       benefit = 1153
   }
   return benefit - (income * .3)
+}
+function getMaxSNAPBenefits(householdsize, income){
+  let benefit = 0;
+  switch(householdsize) {
+      case 1 : benefit = 192
+      break;
+      case 2 : benefit = 352
+      break;
+      case 3 : benefit = 504
+      break;
+      case 4 : benefit = 640 
+      break;
+      case 5 : benefit = 760 
+      break; 
+      case 6 : benefit = 913 
+      break;
+      case 7 : benefit = 1009 
+      break;
+      case 8 : benefit = 1153 
+      break;
+      default: 
+      benefit = 1153
+  }
+  return benefit
 }
 function getCashBenefitForHouseholdSize(householdsize, getsA1){
   let cashBenefit;
