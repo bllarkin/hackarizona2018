@@ -1,0 +1,49 @@
+html, body {
+  margin: 0;
+  background: lightgray;
+}
+
+#header {
+  height: 50px;
+  color: white;
+  background: black;
+}
+
+h1 {
+  margin: 0;
+  padding: 0 15px;
+}
+
+#pageContainer {
+  width: 80%;
+  margin: 25px auto;
+}
+
+i.fas {
+  margin: 0 5px;
+}
+
+fieldset {
+  font-size: 25px;
+  margin: auto;
+  text-align: center;
+  min-height: 300px;
+  border-radius: 10px;
+  background: white;
+}
+
+.question-button {
+  border-radius: 5px;
+}
+
+button.inactive {
+  background: gray;
+}
+
+button.active {
+  background: green;
+}
+
+.hidden {
+  display: none;
+}
