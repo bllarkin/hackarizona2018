@@ -181,7 +181,7 @@ app.get('/setIsStudent', function(req, res){
   })
 })
 
-app.get('/preSubmitPage', function(req, res){
+app.post('/preSubmitPage', function(req, res){
   res.render('preSubmit')
 })
 
