@@ -25,7 +25,7 @@
        $('#maleSelect').toggleClass('active');
       $('#genderField')[0].value = "0"
       turnOffFemaleButton();
-      turnOfOtherButton();
+      turnOffOtherButton();
       localStorage.setItem("gender", 0)
     })
 
@@ -34,7 +34,7 @@
       e.preventDefault();
       $('#genderField')[0].value = "1"
       turnOffMaleButton();
-      turnOfOtherButton();
+      turnOffOtherButton();
       localStorage.setItem("gender", 1)
     })
 
@@ -57,7 +57,7 @@
         $('#femaleSelect').toggleClass('active');
       }
     }
-    function turnOfOtherButton(){
+    function turnOffOtherButton(){
       if ($('#otherSelect').hasClass( 'active' )){
         $('#otherSelect').toggleClass('active');
       }
