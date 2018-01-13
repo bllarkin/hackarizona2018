@@ -3,17 +3,30 @@
 <form action="<%= fAction %>" method="POST">
   <p><%= fQuestion %></p>
 
-  <button name="maleSelect">Male</button>
-  <button name="femaleSelect">Female</button>
-  <button name="otherSelect">Other</button>
+  <button id="maleSelect" name="maleSelect">Male</button>
+  <button id="femaleSelect" name="femaleSelect">Female</button>
+  <button id="otherSelect" name="otherSelect">Other</button>
 
-  <input type="checkbox" hidden name="<%= fValue>"
+  <input id="genderField" type="text" name="<%= fValue %>">
 
   <button name="nextButton">Next question</button>
 
 </form>
 
 <script>
-  
+  $('#maleSelect').click(function(e){
+    e.preventDefault();
+    $('#genderField')[0].value = "0"
+  })
+
+  $('#femaleSelect').click(function(e){
+    e.preventDefault();
+    $('#genderField')[0].value = "1"
+  })
+
+  $('#otherSelect').click(function(e){
+    e.preventDefault();
+    $('#genderField')[0].value = "2"
+  })
 </script>
 <% include ../partials/footer %>

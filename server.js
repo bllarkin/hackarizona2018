@@ -7,6 +7,8 @@ var path = require('path');
 var passport = require("passport")
 var LocalStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
+var store = require('store')
+
 
 const OTHER_GENDER = 2
 const FEMALE_GENDER = 1
@@ -132,18 +134,22 @@ app.post('/setIsStudent', function(req, res){
 app.get('/setGender', function(req, res){
   let question = "What is your Gender?"
 
-  res.render('deleteThis.ejs', {
-    question: question,
-    fAction: "Something",
-    fType: "text",
+  res.render('genderInput', {
+    fQuestion: question,
+    fAction: "/setGender",
     fValue: "gender",
   })
 });
 
 app.get('/setIncome', function(req, res){
   let question = "What is your monthly income?"
+  
+  res.render('textInput', {
+    fQuestion: question,
+    fAction: "/setHouseholdSize",
+    fValue: "income",
+  })
 
-  res.send(question)
 });
 
 app.get('/setHouseholdSize', function(req, res){

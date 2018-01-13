@@ -3,13 +3,23 @@
 <form action="<%= fAction %>" method="POST">
   <p><%= fQuestion %></p>
 
-  <button class="question-button inactive">Yes</button>
-  <button class="question-button inactive">No</button>
+  <button id="yesButton" class="question-button inactive">Yes</button>
+  <button id="noButton" class="question-button inactive">No</button>
 
-  <input type="checkbox" hidden name="<%= fValue %>"
+  <input id="yesNoToggle" type="checkbox" hidden name="<%= fValue %>">
 
   <button name="nextButton">Next question</button>
 
 </form>
 
 <% include ../partials/footer %>
+
+<script>
+
+$('#yesButton').click(function(e){
+  e.preventDefault();
+  $('#yesNoToggle').checked = true
+})
+
+
+</script>
