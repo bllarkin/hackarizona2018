@@ -29,6 +29,20 @@ div.card-panel button {
   margin: 15px auto 0 auto;
 }
 
+button#maleSelect, button#femaleSelect, button#otherSelect {
+  width: 125px;
+  border: none;
+  background: none;
+}
+
+button#maleSelect:hover, button#femaleSelect:hover, button#otherSelect:hover {
+  background: yellow;
+}
+
+button#maleSelect.active, button#femaleSelect.active, button#otherSelect.active {
+  background: lightgreen;
+}
+
 i.fas {
   margin: 0 5px;
 }
