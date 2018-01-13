@@ -96,7 +96,7 @@ app.post('/setIsDisabled', function(req, res){
 app.post('/setIsStudent', function(req, res){
   let isStudent = Boolean(req.body.isStudent);
 
-  res.redirect('/complete')
+  res.redirect('/preSubmitPage')
 })
 
 //Get routes
