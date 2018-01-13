@@ -3,10 +3,21 @@
 <form action="<%= fAction %>" method="POST">
   <p><%= fQuestion %></p>
 
-  <input type="text" name="<%= fValue %>">
+  <input id="textBox" type="text" name="<%= fValue %>">
 
   <button name="nextButton">Next question</button>
 
 </form>
 
 <% include ../partials/footer %>
+<script>
+let value = ""
+
+$('form').submit(function(){
+  console.log("submit");
+  value = $('#textBox').val();
+  localStorage.setItem("<%= fValue %>",  value )
+});
+
+
+</script>

@@ -41,11 +41,7 @@ app.get('/', function(req, res) {
 app.post('/setGender', function(req, res){
   let question = "What is your Gender?"
 
-  createLocalStorageIfItDoesntExist();
   let parsedGender = Number(req.body.gender);
-  localStorage.setItem('gender', parsedGender);
-  console.log(localStorage.getItem('gender'));
-
   if(parsedGender !== MALE_GENDER){
     res.redirect('/setIsPregnant')
   }
@@ -58,9 +54,7 @@ app.post('/setIsPregnant', function(req, res){
   let question = "Are you pregnant?"
   createLocalStorageIfItDoesntExist();
   let isPregnant = Boolean(req.body.isPregnant);
-  localStorage.setItem('isPregnant', isPregnant);
-  console.log(localStorage.getItem('isPregnant'));
-
+  store.set('isPregnant', {value: isPregnant } )
   res.redirect('/setIncome');
 });
 
@@ -69,8 +63,7 @@ app.post('/setIncome', function(req, res){
 
   createLocalStorageIfItDoesntExist();
   let income = Number(req.body.income);
-  localStorage.setItem('income', income);
-  console.log(localStorage.getItem('income'));
+  store.set('income', {income: income} )
 
   res.redirect('/setHouseholdSize')
 });
@@ -80,8 +73,7 @@ app.post('/setHouseholdSize', function(req, res){
 
   createLocalStorageIfItDoesntExist();
   let householdSize = Number(req.body.householdSize);
-  localStorage.setItem('householdSize', householdSize);
-  console.log(localStorage.getItem('householdSize'));
+  store.set('visitor', { householdSize: householdSize })
 
   res.redirect('/setIsFosterChild')
 });
@@ -91,8 +83,7 @@ app.post('/setIsFosterChild', function(req, res){
 
   createLocalStorageIfItDoesntExist();
   let isFoster = String(req.body.isFoster);
-  localStorage.setItem('isFoster', isFoster);
-  console.log(localStorage.getItem('isFoster'));
+  store.set('visitor', { isFoster: isFoster })
 
   res.redirect('/setAge')
 })
@@ -102,8 +93,7 @@ app.post('/setAge', function(req, res){
 
   createLocalStorageIfItDoesntExist();
   let age = Number(req.body.age);
-  localStorage.setItem('age', age);
-  console.log(localStorage.getItem('age'));
+  store.set('visitor', { gender: parsedGender })
 
   res.redirect('/setIsDisabled')
 })
@@ -161,8 +151,8 @@ app.get('/setHouseholdSize', function(req, res){
 app.get('/setIsPregnant', function(req, res){
   let question = "Are you pregnant?"
 
-  res.render('deleteThis.ejs', {
-    question: question,
+  res.render('yesNoInput', {
+    fQuestion: question,
     fAction: "Something",
     fType: "checkbox",
     fValue: "isPregnant",
@@ -194,7 +184,7 @@ app.get('/setIsStudent', function(req, res){
 })
 
 app.get('/testLocal', function(req, res){
-  res.send(localStorage.isPregnant)
+  res.send(store.get('isPregnant'));
 })
 
 //==========================
