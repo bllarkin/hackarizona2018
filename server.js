@@ -218,9 +218,6 @@ app.post('/preSubmitPage', function(req, res){
   res.render('preSubmit')
 })
 
-
-
-
 app.get('/testLocal', function(req, res){
   res.send(store.get('isPregnant'));
 })
