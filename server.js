@@ -132,7 +132,12 @@ app.post('/setIsStudent', function(req, res){
 app.get('/setGender', function(req, res){
   let question = "What is your Gender?"
 
-  res.send(question)
+  res.render('deleteThis.ejs', {
+    question: question,
+    fAction: "Something",
+    fType: "text",
+    fValue: "gender",
+  })
 });
 
 app.get('/setIncome', function(req, res){
@@ -150,7 +155,12 @@ app.get('/setHouseholdSize', function(req, res){
 app.get('/setIsPregnant', function(req, res){
   let question = "Are you pregnant?"
 
-  res.send(question)
+  res.render('deleteThis.ejs', {
+    question: question,
+    fAction: "Something",
+    fType: "checkbox",
+    fValue: "isPregnant",
+  })
 });
 
 app.get('/setIsFosterChild', function(req, res){
