@@ -1,35 +1,41 @@
 <% include ../partials/header %>
 
-<form action="<%= fAction %>" method="POST">
-  <p><%= fQuestion %></p>
+  <form action="<%= fAction %>" method="POST">
+    <p>
+      <%= fQuestion %>
+    </p>
+    <p>
+      <button id="maleSelect" name="maleSelect">Male</button>
+      <button id="femaleSelect" name="femaleSelect">Female</button>
+      <button id="otherSelect" name="otherSelect">Other</button>
+    </p>
+    <input id="genderField" hidden type="text" name="<%= fValue %>">
 
-  <button id="maleSelect" name="maleSelect">Male</button>
-  <button id="femaleSelect" name="femaleSelect">Female</button>
-  <button id="otherSelect" name="otherSelect">Other</button>
+    <div class="row">
+      <div class="col s5 offset-s7">
+        <button name="nextButton" class="btn waves-effect waves-light blue darken-3" type="submit">Next question</button>
+      </div>
+    </div>
 
-  <input id="genderField" hidden type="text" name="<%= fValue %>">
+  </form>
 
-  <button name="nextButton">Next question</button>
+  <script>
+    $('#maleSelect').click(function (e) {
+      e.preventDefault();
+      $('#genderField')[0].value = "0"
+      localStorage.setItem("gender", 0)
+    })
 
-</form>
+    $('#femaleSelect').click(function (e) {
+      e.preventDefault();
+      $('#genderField')[0].value = "1"
+      localStorage.setItem("gender", 1)
+    })
 
-<script>
-  $('#maleSelect').click(function(e){
-    e.preventDefault();
-    $('#genderField')[0].value = "0"
-    localStorage.setItem("gender", 0)
-  })
-
-  $('#femaleSelect').click(function(e){
-    e.preventDefault();
-    $('#genderField')[0].value = "1"
-    localStorage.setItem("gender", 1)
-  })
-
-  $('#otherSelect').click(function(e){
-    e.preventDefault();
-    $('#genderField')[0].value = "2"
-    localStorage.setItem("gender", 2)
-  })
-</script>
-<% include ../partials/footer %>
+    $('#otherSelect').click(function (e) {
+      e.preventDefault();
+      $('#genderField')[0].value = "2"
+      localStorage.setItem("gender", 2)
+    })
+  </script>
+  <% include ../partials/footer %>
