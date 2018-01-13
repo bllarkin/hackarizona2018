@@ -99,6 +99,32 @@ app.post('/setIsStudent', function(req, res){
   res.redirect('/preSubmitPage')
 })
 
+app.post('/viewResults', function(req, res){
+  let selectedGender = req.body.selectedGender
+  let isPregnant = req.body.isPregnant
+  let isFoster = req.body.isFoster
+  let isDisabled = req.body.isDisabled
+  let isStudent = req.body.isStudent
+  let income = req.body.income
+  let age = req.body.age
+  let householdSize = req.body.householdSize
+
+  let userInfo = {
+    income: Number(income),
+    age: Number(age),
+    wasFosterChild: Boolean(isFoster),
+    isPregnant: Boolean(isPregnant),
+    isUSCitizen: true,
+    househldsize: Number(householdSize),
+  }
+  console.log(userInfo)
+  let snap = findSnapBenefitsEligibility(userInfo)
+  let cash = findCashAssistanceEligibility(userInfo)
+  let health = findHealthcareBenefitEligibility(userInfo)
+
+  res.send('snap:'+  snap + 'cash' +  cash +  'health' + health)
+})
+
 //Get routes
 app.get('/setGender', function(req, res){
   let question = "What is your Gender?"
