@@ -17,10 +17,10 @@ div.card-panel {
   max-width: 500px;
   margin: 35px auto;
   background: white;
-  padding: 10px;
+  padding: 25px;
 }
 
-div.card-panel p {
+div.card-panel p, div.card-panel input {
   font-size: 24px;
   text-align: center;
 }
@@ -28,8 +28,6 @@ div.card-panel p {
 div.card-panel button {
   margin: 15px auto 0 auto;
 }
-
-
 
 i.fas {
   margin: 0 5px;
