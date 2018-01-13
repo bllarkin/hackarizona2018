@@ -39,7 +39,6 @@ app.get('/', function(req, res) {
 });
  
 app.post('/setGender', function(req, res){
-  let question = "What is your Gender?"
 
   let parsedGender = Number(req.body.gender);
   if(parsedGender !== MALE_GENDER){
@@ -51,27 +50,19 @@ app.post('/setGender', function(req, res){
 });
 
 app.post('/setIsPregnant', function(req, res){
-  let question = "Are you pregnant?"
-  createLocalStorageIfItDoesntExist();
   let isPregnant = Boolean(req.body.isPregnant);
   store.set('isPregnant', {value: isPregnant } )
   res.redirect('/setIncome');
 });
 
 app.post('/setIncome', function(req, res){
-  let question = "What is your monthly income?"
-
-  createLocalStorageIfItDoesntExist();
   let income = Number(req.body.income);
   store.set('income', {income: income} )
-
   res.redirect('/setHouseholdSize')
 });
 
 app.post('/setHouseholdSize', function(req, res){
-  let question = "How large is your household (Including yourself)?"
 
-  createLocalStorageIfItDoesntExist();
   let householdSize = Number(req.body.householdSize);
   store.set('visitor', { householdSize: householdSize })
 
@@ -79,9 +70,7 @@ app.post('/setHouseholdSize', function(req, res){
 });
 
 app.post('/setIsFosterChild', function(req, res){
-  let question = "Were/Are you a foster child?"
 
-  createLocalStorageIfItDoesntExist();
   let isFoster = String(req.body.isFoster);
   store.set('visitor', { isFoster: isFoster })
 
@@ -89,11 +78,9 @@ app.post('/setIsFosterChild', function(req, res){
 })
 
 app.post('/setAge', function(req, res){
-  let question = "How old are you?"
 
-  createLocalStorageIfItDoesntExist();
+
   let age = Number(req.body.age);
-  store.set('visitor', { gender: parsedGender })
 
   res.redirect('/setIsDisabled')
 })
@@ -101,20 +88,13 @@ app.post('/setAge', function(req, res){
 app.post('/setIsDisabled', function(req, res){
   let question = "Are you disabled?"
 
-  createLocalStorageIfItDoesntExist();
   let isDisabled = Boolean(req.body.isDisabled);
-  localStorage.setItem('isDisabled', isDisabled);
-  console.log(localStorage.getItem('isDisabled'));
 
   res.redirect('/setIsStudent');
 })
 
 app.post('/setIsStudent', function(req, res){
-  let question = "Are you a student?"
-  createLocalStorageIfItDoesntExist();
   let isStudent = Boolean(req.body.isStudent);
-  localStorage.setItem('isStudent', isStudent);
-  console.log(localStorage.getItem('isStudent'));
 
   res.redirect('/complete')
 })
@@ -135,7 +115,7 @@ app.get('/setIncome', function(req, res){
   
   res.render('textInput', {
     fQuestion: question,
-    fAction: "/setHouseholdSize",
+    fAction: "/setIncome",
     fValue: "income",
   })
 
@@ -143,8 +123,12 @@ app.get('/setIncome', function(req, res){
 
 app.get('/setHouseholdSize', function(req, res){
   let question = "How large is your household (Including yourself)?"
+  res.render('textInput', {
+    fQuestion: question,
+    fAction: "/setHouseholdSize",
+    fValue: "householdSize",
+  })
 
-  res.send(question)
 });
 
 app.get('/setIsPregnant', function(req, res){
@@ -152,8 +136,7 @@ app.get('/setIsPregnant', function(req, res){
 
   res.render('yesNoInput', {
     fQuestion: question,
-    fAction: "Something",
-    fType: "checkbox",
+    fAction: "/setIsPregnant",
     fValue: "isPregnant",
   })
 });
@@ -161,26 +144,49 @@ app.get('/setIsPregnant', function(req, res){
 app.get('/setIsFosterChild', function(req, res){
   let question = "Were/Are you a foster child?"
 
-  res.send(question)
+  res.render('yesNoInput', {
+    fQuestion: question,
+    fAction: "/setIsFosterChild",
+    fValue: "isFosterChild",
+  })
 })
 
 app.get('/setAge', function(req, res){
   let question = "How old are you?"
 
-  res.send(question)
+  res.render('textInput', {
+    fQuestion: question,
+    fAction: "/setAge",
+    fValue: "age"
+  })
 })
 
 app.get('/setIsDisabled', function(req, res){
   let question = "Are you disabled?"
 
-  res.send(question)
+  res.render('yesNoInput', {
+    fQuestion: question,
+    fAction: "/setIsDisabled",
+    fValue: "isDisabled",
+  })
 })
 
 app.get('/setIsStudent', function(req, res){
   let question = "Are you a student?"
 
-  res.send(question)
+  res.render('yesNoInput', {
+    fQuestion: question,
+    fAction: "complete",
+    fValue: "isStudent",
+  })
 })
+
+app.get('/submit', function(req, res){
+  res.send(localStorage)
+})
+
+
+
 
 app.get('/testLocal', function(req, res){
   res.send(store.get('isPregnant'));
@@ -223,6 +229,7 @@ function findSnapBenefitsEligibility(visitorInfo){
   }
   return eligibility;
 }
+
 function findCashAssistanceEligibility(visitorInfo){
   //Source: https://des.az.gov/content/cash-assistance-ca-income-eligibility-guidelines
   let cashAssistance = 0;
@@ -234,19 +241,16 @@ function findCashAssistanceEligibility(visitorInfo){
 }
 
 function findHealthcareBenefitEligibility(visitorInfo){
-
-if (checkIfMedicaidEligible(visitorInfo))
-      return "medicaid"
-  if (checkIfFosterChild(visitorInfo))
-      return 'yoAdultTrans'
-  if (checkIfExpecting(visitorInfo))
-      return 'aacs-preg'
-  if (checkIfQualifiesForAccess(visitorInfo))
-      return 'access'
-return 'none';
-
-}
-
+  if (checkIfMedicaidEligible(visitorInfo))
+        return "medicaid"
+    if (checkIfFosterChild(visitorInfo))
+        return 'yoAdultTrans'
+    if (checkIfExpecting(visitorInfo))
+        return 'aacs-preg'
+    if (checkIfQualifiesForAccess(visitorInfo))
+        return 'access'
+  return 'none';
+  }
 function checkIfMedicaidEligible(userInfo){
   if (userInfo.age > 64)
       return true
@@ -254,11 +258,9 @@ function checkIfMedicaidEligible(userInfo){
 function checkIfFosterChild(visitorInfo){
   return visitorInfo.wasFosterChild;
 }
-
 function checkIfExpecting(visitorInfo) {
   return visitorInfo.isPregnant;
 }
-
 function checkIfQualifiesForAccess(visitorInfo){
   //Citation: https://azahcccs.gov/Members/GetCovered/Categories/adults.html
   return (visitorInfo.income < getPovertyLineForHouseholdSize(visitorInfo.householdsize) && visitorInfo.isUSCitizen)
