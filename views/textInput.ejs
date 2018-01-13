@@ -1,12 +1,18 @@
 <% include ../partials/header %>
 
-<form action="<%= fAction %>" method="POST">
-  <p><%= fQuestion %></p>
+  <form action="<%= fAction %>" method="POST">
+    <p>
+      <%= fQuestion %>
+    </p>
 
-  <input type="text" name="<%= fValue %>">
+    <input type="text" name="<%= fValue %>">
 
-  <button name="nextButton" class="btn waves-effect waves-light" type="submit">Next question</button>
+    <div class="row">
+      <div class="col s5 offset-s7">
+      <button name="nextButton" class="btn waves-effect waves-light" type="submit">Next question</button>
+    </div>
+    </div>
 
-</form>
+  </form>
 
-<% include ../partials/footer %>
+  <% include ../partials/footer %>
