@@ -25,17 +25,34 @@
         e.preventDefault();
         $('#yesNoToggle').checked = true
         checked = true;
+        $('#yesButton').toggleClass('active');
+        turnOffNoButton();
       })
 
       $('#noButton').click(function (e) {
         e.preventDefault();
         $('#yesNoToggle').checked = false
         checked = false
+        $('#noButton').toggleClass('active');
+        turnOffYesButton();
       })
+
       $('form').submit(function () {
         console.log("submit");
         localStorage.setItem("<%= fValue %>", checked)
       });
+
+      function turnOffYesButton() {
+        if ($('#yesButton').hasClass('active')) {
+          $('#yesButton').toggleClass('active');
+        }
+      }
+
+      function turnOffNoButton() {
+        if ($('#noButton').hasClass('active')) {
+          $('#noButton').toggleClass('active');
+        }
+      }
 
 
     </script>
