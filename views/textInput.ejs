@@ -1,0 +1,12 @@
+<% include ../partials/header %>
+
+<form action="<%= fAction %>" method="POST">
+  <p><%= fQuestion %></p>
+
+  <input type="text" name="<%= fValue %>">
+
+  <button name="nextButton">Next question</button>
+
+</form>
+
+<% include ../partials/footer %>
