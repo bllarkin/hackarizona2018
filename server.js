@@ -176,13 +176,13 @@ app.get('/setIsStudent', function(req, res){
 
   res.render('yesNoInput', {
     fQuestion: question,
-    fAction: "complete",
+    fAction: "/preSubmitPage",
     fValue: "isStudent",
   })
 })
 
-app.get('/submit', function(req, res){
-  res.send(localStorage)
+app.get('/preSubmitPage', function(req, res){
+  res.render('preSubmit')
 })
 
 

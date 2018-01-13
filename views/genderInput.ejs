@@ -22,20 +22,45 @@
   <script>
     $('#maleSelect').click(function (e) {
       e.preventDefault();
+       $('#maleSelect').toggleClass('active');
       $('#genderField')[0].value = "0"
+      turnOffFemaleButton();
+      turnOfOtherButton();
       localStorage.setItem("gender", 0)
     })
 
     $('#femaleSelect').click(function (e) {
+      $('#femaleSelect').toggleClass('active');
       e.preventDefault();
       $('#genderField')[0].value = "1"
+      turnOffMaleButton();
+      turnOfOtherButton();
       localStorage.setItem("gender", 1)
     })
 
     $('#otherSelect').click(function (e) {
       e.preventDefault();
       $('#genderField')[0].value = "2"
+      $('#otherSelect').toggleClass('active');
+      turnOffMaleButton();
+      turnOffFemaleButton();
       localStorage.setItem("gender", 2)
     })
+
+    function turnOffMaleButton(){
+      if ($('#maleSelect').hasClass( 'active' )){
+        $('#maleSelect').toggleClass('active');
+      }
+    }
+    function turnOffFemaleButton(){
+      if ($('#femaleSelect').hasClass( 'active' )){
+        $('#femaleSelect').toggleClass('active');
+      }
+    }
+    function turnOfOtherButton(){
+      if ($('#otherSelect').hasClass( 'active' )){
+        $('#otherSelect').toggleClass('active');
+      }
+    }
   </script>
   <% include ../partials/footer %>
