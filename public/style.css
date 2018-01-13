@@ -22,6 +22,7 @@ h1 {
 i.fas {
   margin: 0 5px;
 }
+
 fieldset {
   font-size: 25px;
   margin: auto;
@@ -29,6 +30,18 @@ fieldset {
   min-height: 300px;
   border-radius: 10px;
   background: white;
+}
+
+.question-button {
+  border-radius: 5px;
+}
+
+button.inactive {
+  background: gray;
+}
+
+button.active {
+  background: green;
 }
 
 .hidden {
