@@ -1,4 +1,4 @@
-//==========================
+ //==========================
 // Set up
 //==========================
 var express = require("express");
@@ -35,7 +35,7 @@ var mongoose = require("mongoose");
 // Routes
 //==========================
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.redirect('/setGender');
 });
  
 app.post('/setGender', function(req, res){
@@ -130,7 +130,6 @@ app.post('/setIsStudent', function(req, res){
 })
 
 //Get routes
-
 app.get('/setGender', function(req, res){
   let question = "What is your Gender?"
 
