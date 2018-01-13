@@ -43,6 +43,19 @@ button#maleSelect.active, button#femaleSelect.active, button#otherSelect.active 
   background: lightgreen;
 }
 
+button#yesButton, button#noButton {
+  width: 150px;
+}
+
+button#yesButton:hover, button#noButton:hover {
+  background: yellow;
+}
+
+button#yesButton.active, button#noButton.active {
+  background: lightgreen;
+}
+
+
 i.fas {
   margin: 0 5px;
 }

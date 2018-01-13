@@ -1,36 +1,41 @@
 <% include ../partials/header %>
 
-<form action="<%= fAction %>" method="POST">
-  <p><%= fQuestion %></p>
+  <form action="<%= fAction %>" method="POST">
+    <p>
+      <%= fQuestion %>
+    </p>
+    <p>
+      <button id="yesButton" class="question-button inactive">Yes</button>
+      <button id="noButton" class="question-button inactive">No</button>
+    </p>
+    <input id="yesNoToggle" type="checkbox" hidden name="<%= fValue %>">
+    <div class="row">
+      <div class="col s5 offset-s7">
+        <button name="nextButton" class="btn waves-effect waves-light blue darken-3" type="submit">Next question</button>
+      </div>
+    </div>
 
-  <button id="yesButton" class="question-button inactive">Yes</button>
-  <button id="noButton" class="question-button inactive">No</button>
+  </form>
 
-  <input id="yesNoToggle" type="checkbox" hidden name="<%= fValue %>">
+  <% include ../partials/footer %>
 
-  <button name="nextButton">Next question</button>
+    <script>
+      let checked = false
+      $('#yesButton').click(function (e) {
+        e.preventDefault();
+        $('#yesNoToggle').checked = true
+        checked = true;
+      })
 
-</form>
-
-<% include ../partials/footer %>
-
-<script>
-let checked = false
-$('#yesButton').click(function(e){
-  e.preventDefault();
-  $('#yesNoToggle').checked = true
-  checked = true;
-})
-
-$('#noButton').click(function(e){
-  e.preventDefault();
-  $('#yesNoToggle').checked = false
-  checked = false
-})
-$('form').submit(function(){
-  console.log("submit");
-  localStorage.setItem("<%= fValue %>",  checked )
-});
+      $('#noButton').click(function (e) {
+        e.preventDefault();
+        $('#yesNoToggle').checked = false
+        checked = false
+      })
+      $('form').submit(function () {
+        console.log("submit");
+        localStorage.setItem("<%= fValue %>", checked)
+      });
 
 
-</script>
+    </script>
