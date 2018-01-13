@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.js"
+      integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+  <p>
+  <%= question %>
+  </p>
+  <form action="<%= fAction %>">
+    <p onclick:"sayHey()" id="op1">Op1</p>
+     <button>Click me</button> 
+    <p id="op2">Op2</p>
+    <input type="<%= fType %>" name="<%= fValue %>">
+    <input type="submit" value="Submit">
+    <input type="checkbox" name="isSomething">
+  </form>
+  </body>
+</html>
+<script>
+  $('#op2').click(function(){
+    console.log("Hello");
+    document.getElementsByName('isSomething')[0].checked = true;
+  })
+    $('#op1').click(function(){
+    console.log("Hello2");
+    document.getElementsByName('isSomething')[0].checked = false;
+  })
+</script>
