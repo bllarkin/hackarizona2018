@@ -3,20 +3,30 @@ html, body {
   background: lightgray;
 }
 
-#header {
-  height: 50px;
+div.nav-wrapper {
   color: white;
   background: black;
 }
 
-h1 {
+h1#title {
   margin: 0;
-  padding: 0 15px;
+  padding: 0;
 }
 
-#pageContainer {
-  width: 80%;
-  margin: 25px auto;
+div.card-panel {
+  max-width: 500px;
+  margin: 35px auto;
+  background: white;
+  padding: 25px;
+}
+
+div.card-panel p, div.card-panel input {
+  font-size: 24px;
+  text-align: center;
+}
+
+div.card-panel button {
+  margin: 15px auto 0 auto;
 }
 
 i.fas {

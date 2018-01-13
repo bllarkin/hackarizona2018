@@ -1,14 +1,21 @@
 <% include ../partials/header %>
 
-<form action="<%= fAction %>" method="POST">
-  <p><%= fQuestion %></p>
+  <form action="<%= fAction %>" method="POST">
+    <p>
+      <%= fQuestion %>
+    </p>
 
   <input id="textBox" type="text" name="<%= fValue %>">
 
-  <button name="nextButton">Next question</button>
+    <div class="row">
+      <div class="col s5 offset-s7">
+      <button name="nextButton" class="btn waves-effect waves-light blue darken-3" type="submit">Next question</button>
+    </div>
+    </div>
 
-</form>
+  </form>
 
+<<<<<<< HEAD
 <% include ../partials/footer %>
 <script>
 let value = ""
@@ -21,3 +28,6 @@ $('form').submit(function(){
 
 
 </script>
+=======
+  <% include ../partials/footer %>
+>>>>>>> userinterface
