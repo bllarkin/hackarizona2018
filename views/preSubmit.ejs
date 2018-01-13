@@ -1,18 +1,18 @@
 <% include ../partials/header %>
 
-  <form action="viewResults" method="GET">
+  <form action="viewResults" method="POST">
     <p>
         Please confirm your entries
     </p>
     
-        Gender <input id="selectedGender"></input>
-        Pregnant? <input id="isPregnant"></input>
-        Income? <input id="income"></input>
-        householdSize? <input id="householdSize"></input>
-        Foster Child? <input id="isFosterChild"></input>
-        Age? <input id="age"></input>
-        Disabled? <input id="isDisabled"></input>
-        Student? <input id="isStudent"></input>
+        Gender <input name="selectedGender" id="selectedGender"></input>
+        Pregnant? <input name="isPregnant" id="isPregnant"></input>
+        Income? <input name="income" id="income"></input>
+        householdSize? <input name="householdSize" id="householdSize"></input>
+        Foster Child? <input name = "isFosterChild" id="isFosterChild"></input>
+        Age? <input name="age" id="age"></input>
+        Disabled? <input name="isDisabled" id="isDisabled"></input>
+        Student? <input name="isStudent" id="isStudent"></input>
     <button>Submit</button>
 
   </form>
