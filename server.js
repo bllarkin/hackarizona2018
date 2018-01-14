@@ -36,7 +36,7 @@ var mongoose = require("mongoose");
 // Routes
 //==========================
 app.get('/', function(req, res) {
-    res.redirect('/setGender');
+    res.redirect('/setIsHomeless');
 });
  
 
@@ -141,7 +141,11 @@ app.post('/viewResults', function(req, res){
     maxSnapBenefits: getMaxSNAPBenefits(userInfo.householdsize),
     canGetCashAssistance: (cash > 0 )? true : false, 
     maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
-    eligibleForHealthcare: health
+    eligibleForHealthcare: health,
+    schoolLunch: 'full',
+    childCareAssist: false,
+    reducedFareBusPass: false, 
+    
   }
   getAssortedServices(userInfo, results)
   console.log(results)

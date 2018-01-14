@@ -1,10 +1,26 @@
 <% include ../partials/header %>
-
   <p>Here are the benefits you may qualify for:</p>
 
   <ul class="collapsible popout">
+      <!--- -->
+  <% if(reducedFareBusPass == true){ %>
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons"></i>Childcare Assistance</div>
+        <div class="collapsible-body">
+          <p>
+            You likely qualify for a reduced rate on a bus pass
+          </p>
+          <p>
+            <a href="https://www.valleymetro.org/reduced-fare-program" 
+              class="waves-effect waves-light btn blue darken-3">More information</a>
+          </p>
+        </div>
+      </li>
+      <% } %>
+  <!-- -->
     <!--- -->
-  <% if(childcareAssist == true){ %>
+  <% if(childCareAssist == true){ %>
       <li>
         <div class="collapsible-header">
           <i class="material-icons"></i>Childcare Assistance</div>
