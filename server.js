@@ -126,7 +126,7 @@ app.post('/viewResults', function(req, res){
     maxSnapBenefits: getMaxSNAPBenefits(userInfo.householdsize),
     canGetCashAssistance: (cash > 0 )? true : false, 
     maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
-    eligibileForHealthcare: health
+    eligibleForHealthcare: health
   }
   res.render('results', results);
 })
