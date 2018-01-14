@@ -1,14 +1,14 @@
 <% include ../partials/header %>
 
-<h2>Here are the benefits you may qualify for:</h2>
+<p>Here are the benefits you may qualify for:</p>
 
-<ul class="collapsible">
+<ul class="collapsible popout">
   <% if(canGetSnap === true){ %>
     <li>
       <div class="collapsible-header"><i class="material-icons"></i>SNAP Benefits</div>
       <div class="collapsible-body">
         <p>
-          The maximimum SNAP benefit you may be eligible for would be $<% maxSnapBenefits %>.  For more information, see below.
+          The maximimum SNAP benefit you may be eligible for would be $<%= maxSnapBenefits %>.  For more information, see below.
         </p>
         <p>
           <a href="https://des.az.gov/services/basic-needs/food/nutrition-assistance-formerly-food-stamp-program" class="waves-effect waves-light btn blue darken-3">More Information About SNAP</a>
@@ -21,7 +21,7 @@
       <div class="collapsible-header"><i class="material-icons"></i>Cash Benefits/Assistance</div>
       <div class="collapsible-body">
         <p>
-          The maximimum cash benefit you may be eligible for would be $<% maxCashAssistance %>.  For more information, see below.
+          The maximimum cash benefit you may be eligible for would be $<%= maxCashAssistance %>.  For more information, see below.
         </p>
         <p>
             <a href="https://des.az.gov/services/basic-needs/financial-support/cash-assistance" class="waves-effect waves-light btn blue darken-3">More Information About Cash Assistance</a>
@@ -29,7 +29,7 @@
       </div>
     </li>
   <% } %>
-  <% if(eligibleForHealthcare !== "none"){ %>
+  <% if(eligibileForHealthcare !== "none"){ %>
     <li>
       <div class="collapsible-header"><i class="material-icons"></i>Healthcare</div>
       <div class="collapsible-body">
@@ -53,6 +53,19 @@
             </p>
         </div>
       </li>
+      <% } %>
 </ul>
 
+<div class="row">
+    <div class="col s4 offset-s4">
+      <a href="/" class="btn waves-effect waves-light blue darken-3">Start Over</a>
+    </div>
+  </div>
+
 <% include ../partials/footer %>
+
+<script>
+  $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+</script>

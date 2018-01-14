@@ -124,12 +124,11 @@ app.post('/viewResults', function(req, res){
   let results = {
     canGetSnap: snap > 0 ? true : false,
     maxSnapBenefits: getMaxSNAPBenefits(userInfo.householdsize),
-    canGetCashAssistance: cash > 0 ? true : false, 
+    canGetCashAssistance: (cash > 0 )? true : false, 
     maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
     eligibileForHealthcare: health
-
   }
-  res.json(results);
+  res.render('results', results);
 })
 
 //Get routes
@@ -323,7 +322,7 @@ function getSNAPBenefits(householdsize, income){
   }
   return benefit - (income * .3)
 }
-function getMaxSNAPBenefits(householdsize, income){
+function getMaxSNAPBenefits(householdsize){
   let benefit = 0;
   switch(householdsize) {
       case 1 : benefit = 192
