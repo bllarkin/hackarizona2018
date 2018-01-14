@@ -122,7 +122,6 @@ app.post('/viewResults', function(req, res){
   let age = req.body.age
   let householdSize = req.body.householdSize
   let hasKids = req.body.hasKids
-  console.log(hasKids)
   let userInfo = {
     income: Number(income),
     age: Number(age),
@@ -133,7 +132,6 @@ app.post('/viewResults', function(req, res){
 
     hasKids: hasKids == "No" || (!hasKids) ? false : true
   }
-  console.log(hasKids)
   let snap = findSnapBenefitsEligibility(userInfo)
   let cash = findCashAssistanceEligibility(userInfo)
   let health = findHealthcareBenefitEligibility(userInfo)
@@ -146,7 +144,7 @@ app.post('/viewResults', function(req, res){
     eligibleForHealthcare: health
   }
   getAssortedServices(userInfo, results)
-  // res.json(results);
+  console.log(results)
   res.render('results', results);
 })
 
@@ -470,6 +468,9 @@ function getAssortedServices(user, object) {
   console.log(user)
   if(user.age > 64 || user.age < 18) {
       object.reducedFareBusPass = true
+  }
+  else {
+    object.reducedFareBusPass = false
   }
   // Source: https://www.gpo.gov/fdsys/pkg/FR-2017-04-10/pdf/2017-07043.pdf
   if(user.hasKids && (user.income < ( getFederalPovertyLineForHouseholdSize(user.householdsize) * 1.3) ))

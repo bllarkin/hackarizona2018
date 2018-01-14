@@ -3,6 +3,40 @@
   <p>Here are the benefits you may qualify for:</p>
 
   <ul class="collapsible popout">
+    <!--- -->
+  <% if(childcareAssist == true){ %>
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons"></i>Childcare Assistance</div>
+        <div class="collapsible-body">
+          <p>
+            Given the information you provided it is likely that you would qualify for subsidized childcare
+          </p>
+          <p>
+            <a href="https://des.az.gov/services/basic-needs/child-care" 
+              class="waves-effect waves-light btn blue darken-3">More information</a>
+          </p>
+        </div>
+      </li>
+      <% } %>
+  <!-- -->
+  <!--- -->
+  <% if(schoolLunch !== 'full'){ %>
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons"></i>Free/Reduced Lunches</div>
+        <div class="collapsible-body">
+          <p>
+            Your kids likely quaify for <%= schoolLunch %> lunch at school.
+          </p>
+          <p>
+            <a href="https://www.fns.usda.gov/school-meals/applying-free-and-reduced-price-school-meals" 
+              class="waves-effect waves-light btn blue darken-3">More information</a>
+          </p>
+        </div>
+      </li>
+      <% } %>
+  <!-- -->
     <% if(canGetSnap === true){ %>
       <li>
         <div class="collapsible-header">
@@ -33,6 +67,7 @@
             </div>
           </li>
           <% } %>
+          
                 <% if(eligibleForHealthcare == "aacs-preg"){ %>
                   <li>
                     <div class="collapsible-header">
