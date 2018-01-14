@@ -128,6 +128,7 @@ app.post('/viewResults', function(req, res){
     maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
     eligibleForHealthcare: health
   }
+  console.log("results line 131: " + results);
   res.render('results', results);
 })
 
@@ -271,6 +272,7 @@ function findCashAssistanceEligibility(visitorInfo){
 }
 
 function findHealthcareBenefitEligibility(visitorInfo){
+  console.log(visitorInfo);
   if (checkIfMedicaidEligible(visitorInfo))
         return "medicaid"
     if (checkIfFosterChild(visitorInfo))
