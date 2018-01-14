@@ -143,12 +143,13 @@ app.post('/viewResults', function(req, res){
     maxSnapBenefits: getMaxSNAPBenefits(userInfo.householdsize),
     canGetCashAssistance: (cash > 0 )? true : false, 
     maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
-    eligibileForHealthcare: health
+    eligibleForHealthcare: health
 
 
   }
   getAssortedServices(userInfo, results)
-  res.json(results);
+  // res.json(results);
+  res.render('results', results);
 })
 
 //Get routes
@@ -477,7 +478,7 @@ function getAssortedServices(user, object) {
      { object.schoolLunch = 'free' }
   else if(user.hasKids && (user.income < ( getFederalPovertyLineForHouseholdSize(user.householdsize) * 1.3) ))
       { object.schoolLunch = 'reduced '}
-  else { object.schoolLunch = 'full-price'}
+  else { object.schoolLunch = 'full'}
 
   // Source: http://www.arizonachildcare.org/financial-assistance.html
 
