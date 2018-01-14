@@ -16,7 +16,27 @@
         HasKids? <input name="hasKids" id="hasKids"></input>
     <button>Submit</button>
 
-  </form>
+        Gender
+        <input name="selectedGender" id="selectedGender"></input>
+        Pregnant?
+        <input name="isPregnant" id="isPregnant"></input>
+        Income?
+        <input name="income" id="income"></input>
+        householdSize?
+        <input name="householdSize" id="householdSize"></input>
+        Foster Child?
+        <input name="isFosterChild" id="isFosterChild"></input>
+        Age?
+        <input name="age" id="age"></input>
+        Disabled?
+        <input name="isDisabled" id="isDisabled"></input>
+        Student?
+        <input name="isStudent" id="isStudent"></input>
+        <div class="row">
+            <div class="col s4 offset-s8">
+                <button class="btn waves-effect waves-light blue darken-3" type="submit">Submit</button>
+            </div>
+        </div>
 
 <% include ../partials/footer %>
 <script>
@@ -39,4 +59,23 @@ $('#income').val(localStorage.getItem("income"));
 $('#hasKids').val(localStorage.getItem("hasKids") !== "false" ? "Yes" : "No");
 $('#isHomeless').val(localStorage.getItem("isHomeless") !== "false" ? "Yes" : "No")
 
-</script>
+    <% include ../partials/footer %>
+        <script>
+            function mapGenderNumberToStringValue(number) {
+                if (number == 0)
+                    return 'male'
+                if (number == 1)
+                    return 'female'
+                else
+                    return 'other'
+            }
+            $('#selectedGender').val(mapGenderNumberToStringValue(localStorage.getItem("gender")))
+            $('#isDisabled').val(localStorage.getItem("isDisabled") !== "false" ? "Yes" : "No");
+            $('#isStudent').val(localStorage.getItem("isStudent") !== "false" ? "Yes" : "No");
+            $('#isPregnant').val(localStorage.getItem("isPregnant") !== "false" ? "Yes" : "No");
+            $('#isFosterChild').val(localStorage.getItem("isFosterChild") !== "false" ? "Yes" : "No");
+            $('#age').val(localStorage.getItem("age"));
+            $('#householdSize').val(localStorage.getItem("householdSize"));
+            $('#income').val(localStorage.getItem("income"));
+
+        </script>

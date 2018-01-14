@@ -141,7 +141,7 @@ app.post('/viewResults', function(req, res){
   let results = {
     canGetSnap: snap > 0 ? true : false,
     maxSnapBenefits: getMaxSNAPBenefits(userInfo.householdsize),
-    canGetCashAssistance: cash > 0 ? true : false, 
+    canGetCashAssistance: (cash > 0 )? true : false, 
     maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
     eligibileForHealthcare: health
 
@@ -258,7 +258,6 @@ app.post('/preSubmitPage', function(req, res){
   res.render('preSubmit')
 })
 
-
 app.get('/testLocal', function(req, res){
   res.send(store.get('isPregnant'));
 })
@@ -313,6 +312,7 @@ function findCashAssistanceEligibility(visitorInfo){
 }
 
 function findHealthcareBenefitEligibility(visitorInfo){
+  console.log(visitorInfo);
   if (checkIfMedicaidEligible(visitorInfo))
         return "medicaid"
     if (checkIfFosterChild(visitorInfo))
@@ -364,7 +364,7 @@ function getSNAPBenefits(householdsize, income){
   }
   return benefit - (income * .3)
 }
-function getMaxSNAPBenefits(householdsize, income){
+function getMaxSNAPBenefits(householdsize){
   let benefit = 0;
   switch(householdsize) {
       case 1 : benefit = 192
