@@ -47,6 +47,12 @@ button#yesButton, button#noButton {
   width: 150px;
 }
 
+button#yesButton, button#noButton {
+  width: 125px;
+  border: none;
+  background: none;
+}
+
 button#yesButton:hover, button#noButton:hover {
   background: yellow;
 }
