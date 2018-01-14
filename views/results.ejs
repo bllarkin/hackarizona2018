@@ -83,8 +83,8 @@
             </div>
           </li>
           <% } %>
-          
-                <% if(eligibleForHealthcare == "aacs-preg" || "medicaid" || "yoAdultTrans" || "access"){ %>
+          <%= eligibleForHealthcare != 'none' %>
+                <% if(eligibleForHealthcare != 'none'){ %>
                   <li>
                     <div class="collapsible-header">
                       <i class="material-icons"></i>Healthcare</div>

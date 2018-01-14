@@ -24,8 +24,6 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-var mongoose = require("mongoose");
-// mongoose.connect("mongodb://localhost/socialservices");
 
 
 //==========================
@@ -282,17 +280,17 @@ app.use(function(err, req, res, next){
 //==========================
 
 // Local test server
-// app.listen(app.get('port'), function(){
-//   console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
-// })
+app.listen(app.get('port'), function(){
+  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+})
 
-// Settings for Google Cloud Platform
-const server = app.listen(8080, () => {
-  const host = server.address().address;
-  const port = server.address().port;
+// // Settings for Google Cloud Platform
+// const server = app.listen(8080, () => {
+//   const host = server.address().address;
+//   const port = server.address().port;
 
-  console.log('Example app listening at http://${host}:${port}');
-});
+//   console.log('Example app listening at http://${host}:${port}');
+// });
 
 
 // App functions
@@ -328,7 +326,7 @@ function findHealthcareBenefitEligibility(visitorInfo){
         return "medicaid"
     if (checkIfFosterChild(visitorInfo))
         return 'yoAdultTrans'
-    if (checkIfExpecting(visitorInfo))
+    if (checkIfExpectingCoverage(visitorInfo))
         return 'aacs-preg'
     if (checkIfQualifiesForAccess(visitorInfo))
         return 'access'
@@ -339,10 +337,10 @@ function checkIfMedicaidEligible(userInfo){
       return true
 }
 function checkIfFosterChild(visitorInfo){
-  return visitorInfo.wasFosterChild;
+  return visitorInfo.wasFosterChild && (visitorInfo.age < 26);
 }
-function checkIfExpecting(visitorInfo) {
-  return visitorInfo.isPregnant;
+function checkIfExpectingCoverage(visitorInfo) {
+  return visitorInfo.isPregnant && (visitorInfo.income < getFederalPovertyLineForHouseholdSize(visitorInfo.householdsize));
 }
 function checkIfQualifiesForAccess(visitorInfo){
   //Citation: https://azahcccs.gov/Members/GetCovered/Categories/adults.html
