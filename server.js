@@ -477,7 +477,7 @@ function getAssortedServices(user, object) {
      { object.schoolLunch = 'free' }
   else if(user.hasKids && (user.income < ( getFederalPovertyLineForHouseholdSize(user.householdsize) * 1.3) ))
       { object.schoolLunch = 'reduced '}
-  else { object.schoolLunch = 'full'}
+  else { object.schoolLunch = 'full-price'}
 
   // Source: http://www.arizonachildcare.org/financial-assistance.html
 
