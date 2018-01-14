@@ -15,7 +15,7 @@ const FEMALE_GENDER = 1
 const MALE_GENDER = 0
 
 
-app.set('port', 3000); // set port
+app.set('port', 3030); // set port
 app.use(express.static(__dirname + '/public')); // static files
 app.set("view engine", "ejs");
 
