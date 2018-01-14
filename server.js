@@ -1,3 +1,4 @@
+
  //==========================
 // Set up
 //==========================
@@ -38,6 +39,15 @@ app.get('/', function(req, res) {
     res.redirect('/setGender');
 });
  
+
+ 
+app.post('/setIsHomeless', function(req, res){
+
+
+  res.redirect('/setGender')
+  
+});
+
 app.post('/setGender', function(req, res){
 
   let parsedGender = Number(req.body.gender);
@@ -72,8 +82,6 @@ app.post('/setHouseholdSize', function(req, res){
 app.post('/setIsFosterChild', function(req, res){
 
   let isFoster = String(req.body.isFoster);
-  store.set('visitor', { isFoster: isFoster })
-
   res.redirect('/setAge')
 })
 
@@ -96,6 +104,11 @@ app.post('/setIsDisabled', function(req, res){
 app.post('/setIsStudent', function(req, res){
   let isStudent = Boolean(req.body.isStudent);
 
+  res.redirect('/setHasKids')
+})
+app.post('/setHasKids', function(req, res){
+  let hasKids = Boolean(req.body.hasKids);
+
   res.redirect('/preSubmitPage')
 })
 
@@ -108,7 +121,8 @@ app.post('/viewResults', function(req, res){
   let income = req.body.income
   let age = req.body.age
   let householdSize = req.body.householdSize
-
+  let hasKids = req.body.hasKids
+  console.log(hasKids)
   let userInfo = {
     income: Number(income),
     age: Number(age),
@@ -116,7 +130,10 @@ app.post('/viewResults', function(req, res){
     isPregnant: Boolean(isPregnant),
     isUSCitizen: true,
     householdsize: Number(householdSize),
+
+    hasKids: hasKids == "No" || (!hasKids) ? false : true
   }
+  console.log(hasKids)
   let snap = findSnapBenefitsEligibility(userInfo)
   let cash = findCashAssistanceEligibility(userInfo)
   let health = findHealthcareBenefitEligibility(userInfo)
@@ -128,11 +145,24 @@ app.post('/viewResults', function(req, res){
     maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
     eligibileForHealthcare: health
 
+
   }
+  getAssortedServices(userInfo, results)
   res.json(results);
 })
 
 //Get routes
+
+app.get('/setIsHomeless', function(req, res){
+  let question = "Are you homeless?"
+
+  res.render('yesNoInput', {
+    fQuestion: question,
+    fAction: "/setIsHomeless",
+    fValue: "isHomeless",
+  })
+});
+
 app.get('/setGender', function(req, res){
   let question = "What is your Gender?"
 
@@ -209,16 +239,24 @@ app.get('/setIsStudent', function(req, res){
 
   res.render('yesNoInput', {
     fQuestion: question,
-    fAction: "/preSubmitPage",
+    fAction: "/setIsStudent",
     fValue: "isStudent",
+  })
+})
+
+app.get('/setHasKids', function(req, res){
+  let question = "Do you have kids?"
+
+  res.render('yesNoInput', {
+    fQuestion: question,
+    fAction: "/preSubmitPage",
+    fValue: "hasKids",
   })
 })
 
 app.post('/preSubmitPage', function(req, res){
   res.render('preSubmit')
 })
-
-
 
 
 app.get('/testLocal', function(req, res){
@@ -425,4 +463,29 @@ function getPovertyLineForHouseholdSize(householdsize){
       incomeLimit = 3190 + ((householdsize - 5) * 463)
   }
   return incomeLimit;
+}
+
+function getAssortedServices(user, object) {
+  // Source: http://suntran.com/fares_sungo_options.php
+  // Source: https://www.valleymetro.org/reduced-fare-program
+  console.log(user)
+  if(user.age > 64 || user.age < 18) {
+      object.reducedFareBusPass = true
+  }
+  // Source: https://www.gpo.gov/fdsys/pkg/FR-2017-04-10/pdf/2017-07043.pdf
+  if(user.hasKids && (user.income < ( getFederalPovertyLineForHouseholdSize(user.householdsize) * 1.3) ))
+     { object.schoolLunch = 'free' }
+  else if(user.hasKids && (user.income < ( getFederalPovertyLineForHouseholdSize(user.householdsize) * 1.3) ))
+      { object.schoolLunch = 'reduced '}
+  else { object.schoolLunch = 'full'}
+
+  // Source: http://www.arizonachildcare.org/financial-assistance.html
+
+  if (user.hasKids && (user.income < (getFederalPovertyLineForHouseholdSize(user.householdsize) * 1.65))){
+    object.childcareAssist = true }
+  else {
+    object.childCareAssist = false
+  }
+
+  
 }

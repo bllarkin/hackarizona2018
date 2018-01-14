@@ -13,6 +13,7 @@
         Age? <input name="age" id="age"></input>
         Disabled? <input name="isDisabled" id="isDisabled"></input>
         Student? <input name="isStudent" id="isStudent"></input>
+        HasKids? <input name="hasKids" id="hasKids"></input>
     <button>Submit</button>
 
   </form>
@@ -35,5 +36,7 @@ $('#isFosterChild').val(localStorage.getItem("isFosterChild") !== "false" ? "Yes
 $('#age').val(localStorage.getItem("age"));
 $('#householdSize').val(localStorage.getItem("householdSize"));
 $('#income').val(localStorage.getItem("income"));
+$('#hasKids').val(localStorage.getItem("hasKids") !== "false" ? "Yes" : "No");
+$('#isHomeless').val(localStorage.getItem("isHomeless") !== "false" ? "Yes" : "No")
 
 </script>
