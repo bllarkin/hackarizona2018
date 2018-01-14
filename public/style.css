@@ -8,6 +8,10 @@ div.nav-wrapper {
   background: black;
 }
 
+nav a.brand-logo {
+  white-space: nowrap;
+}
+
 h1#title {
   margin: 0;
   padding: 0;
