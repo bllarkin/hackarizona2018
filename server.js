@@ -144,8 +144,6 @@ app.post('/viewResults', function(req, res){
     canGetCashAssistance: (cash > 0 )? true : false, 
     maxCashAssistance: getCashBenefitForHouseholdSize(userInfo.householdsize),
     eligibleForHealthcare: health
-
-
   }
   getAssortedServices(userInfo, results)
   // res.json(results);
