@@ -459,7 +459,6 @@ function getPovertyLineForHouseholdSize(householdsize){
 function getAssortedServices(user, object) {
   // Source: http://suntran.com/fares_sungo_options.php
   // Source: https://www.valleymetro.org/reduced-fare-program
-  console.log(user)
   if(user.age > 64 || user.age < 18) {
       object.reducedFareBusPass = true
   }
