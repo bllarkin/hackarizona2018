@@ -33,15 +33,13 @@ app.use(bodyParser.json());
 //==========================
 // Routes
 //==========================
+
+//These get routes exist to enable the flow of the application. 
 app.get('/', function(req, res) {
     res.redirect('/setIsHomeless');
 });
- 
 
- 
 app.post('/setIsHomeless', function(req, res){
-
-
   res.redirect('/setGender')
   
 });
@@ -50,6 +48,7 @@ app.post('/setGender', function(req, res){
 
   let parsedGender = Number(req.body.gender);
   if(parsedGender !== MALE_GENDER){
+    //Show the Are you pregnant question only to non-males
     res.redirect('/setIsPregnant')
   }
   else {
@@ -58,59 +57,40 @@ app.post('/setGender', function(req, res){
 });
 
 app.post('/setIsPregnant', function(req, res){
-  let isPregnant = Boolean(req.body.isPregnant);
-  store.set('isPregnant', {value: isPregnant } )
   res.redirect('/setIncome');
 });
 
 app.post('/setIncome', function(req, res){
-  let income = Number(req.body.income);
-  store.set('income', {income: income} )
   res.redirect('/setHouseholdSize')
 });
 
 app.post('/setHouseholdSize', function(req, res){
-
-  let householdSize = Number(req.body.householdSize);
-  store.set('visitor', { householdSize: householdSize })
-
   res.redirect('/setIsFosterChild')
 });
 
 app.post('/setIsFosterChild', function(req, res){
-
-  let isFoster = String(req.body.isFoster);
   res.redirect('/setAge')
 })
 
 app.post('/setAge', function(req, res){
-
-
-  let age = Number(req.body.age);
-
   res.redirect('/setIsDisabled')
 })
 
 app.post('/setIsDisabled', function(req, res){
-  let question = "Are you disabled?"
-
-  let isDisabled = Boolean(req.body.isDisabled);
-
   res.redirect('/setIsStudent');
 })
 
 app.post('/setIsStudent', function(req, res){
-  let isStudent = Boolean(req.body.isStudent);
-
   res.redirect('/setHasKids')
 })
 app.post('/setHasKids', function(req, res){
-  let hasKids = Boolean(req.body.hasKids);
-
   res.redirect('/preSubmitPage')
 })
 
 app.post('/viewResults', function(req, res){
+  // Build the results from the content of the form
+  // The form content should be populated by the frontend
+  // by pulling data from local storage
   let selectedGender = req.body.selectedGender
   let isPregnant = req.body.isPregnant
   let isFoster = req.body.isFoster
@@ -120,6 +100,8 @@ app.post('/viewResults', function(req, res){
   let age = req.body.age
   let householdSize = req.body.householdSize
   let hasKids = req.body.hasKids
+  // Create the user info object that will be passed to the benefit
+  // eligibilty functions
   let userInfo = {
     income: Number(income),
     age: Number(age),
@@ -127,9 +109,12 @@ app.post('/viewResults', function(req, res){
     isPregnant: Boolean(isPregnant),
     isUSCitizen: true,
     householdsize: Number(householdSize),
-
+    selectedGender: Number(selectedGender),
+    isStudent: Boolean(isStudent),
+    isDisabled: Boolean(isDisabled),
     hasKids: hasKids == "No" || (!hasKids) ? false : true
   }
+
   let snap = findSnapBenefitsEligibility(userInfo)
   let cash = findCashAssistanceEligibility(userInfo)
   let health = findHealthcareBenefitEligibility(userInfo)
@@ -145,13 +130,15 @@ app.post('/viewResults', function(req, res){
     reducedFareBusPass: false, 
     
   }
+  
   getAssortedServices(userInfo, results)
-  console.log(results)
   res.render('results', results);
 })
 
 //Get routes
-
+// These each render the question based on the object that is passed into the render function
+// The question will be equal to fQuestion, and the next page (IE the page the form will be posted to)
+// is equal to fValue
 app.get('/setIsHomeless', function(req, res){
   let question = "Are you homeless?"
 
@@ -255,11 +242,9 @@ app.get('/setHasKids', function(req, res){
 
 app.post('/preSubmitPage', function(req, res){
   res.render('preSubmit')
+
 })
 
-app.get('/testLocal', function(req, res){
-  res.send(store.get('isPregnant'));
-})
 
 //==========================
 // Error Handling routes
@@ -295,12 +280,7 @@ app.listen(app.get('port'), function(){
 
 // App functions
 
-function createLocalStorageIfItDoesntExist(){
-  if (typeof localStorage === "undefined" || localStorage === null) {
-    var LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
-  }
-}
+
 function findSnapBenefitsEligibility(visitorInfo){
   let eligibility = 0;
   if(visitorInfo.income < getFederalPovertyLineForHouseholdSize(visitorInfo.householdsize)){
@@ -313,7 +293,6 @@ function findCashAssistanceEligibility(visitorInfo){
   //Source: https://des.az.gov/content/cash-assistance-ca-income-eligibility-guidelines
   let cashAssistance = 0;
   if (visitorInfo.income < getFederalPovertyLineForHouseholdSize(visitorInfo.householdsize)){
-    console.log("alright do we even get here ")
       cashAssistance = getCashBenefitForHouseholdSize(visitorInfo.householdsize)
   }
   return cashAssistance;
@@ -321,7 +300,6 @@ function findCashAssistanceEligibility(visitorInfo){
 }
 
 function findHealthcareBenefitEligibility(visitorInfo){
-  console.log(visitorInfo);
   if (checkIfMedicaidEligible(visitorInfo))
         return "medicaid"
     if (checkIfFosterChild(visitorInfo))
@@ -333,6 +311,7 @@ function findHealthcareBenefitEligibility(visitorInfo){
   return 'none';
   }
 function checkIfMedicaidEligible(userInfo){
+  //Todo: Determine if there are more constraints on medicaid
   if (userInfo.age > 64)
       return true
 }
@@ -398,6 +377,9 @@ function getMaxSNAPBenefits(householdsize){
   return benefit
 }
 function getCashBenefitForHouseholdSize(householdsize, getsA1){
+  // getsA1 needs to be true or false based on the visitors eligibility
+  // for the higher tier of cash benefits. 
+  // Source: https://des.az.gov/content/cash-assistance-ca-income-eligibility-guidelines
   let cashBenefit;
   switch(householdsize) {
       case 1 : cashBenefit = getsA1 ? 164 : 103
@@ -430,7 +412,7 @@ function getCashBenefitForHouseholdSize(householdsize, getsA1){
   return cashBenefit;
 }
 function getFederalPovertyLineForHouseholdSize(householdsize){
-
+  // Source: https://des.az.gov/content/cash-assistance-ca-income-eligibility-guidelines
   let incomeLimit;
   switch(householdsize) {
       case 1 : incomeLimit = 990
